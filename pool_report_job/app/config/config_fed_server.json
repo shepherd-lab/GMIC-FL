@@ -1,0 +1,18 @@
+{
+  "format_version": 2,
+  "task_data_filters": [],
+  "task_result_filters": [],
+  "workflows": [
+    {
+      "id": "pool_report",
+      "path": "pool_report_controller.PoolReportController",
+      "args": {
+        "task_name": "pool_report",
+        "poolable_methods": ["incoming_global", "pretrained_baseline", "ditto_modulewise_perround"],
+        "timeout": 7200,
+        "out_file": "/workspace/server_logs/pooled_stats_ditto_mw_g0.01_l0.5_f0.json"
+      }
+    }
+  ],
+  "components": []
+}

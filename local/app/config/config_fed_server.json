@@ -1,0 +1,74 @@
+{
+  "format_version": 2,
+  "task_data_filters": [],
+  "task_result_filters": [],
+  "workflows": [
+    {
+      "id": "local",
+      "path": "nvflare.app_common.workflows.fedavg.FedAvg",
+      "args": {
+        "num_clients": 1,
+        "num_rounds": 60,
+        "start_round": 0,
+        "persistor_id": "persistor"
+      }
+    }
+  ],
+  "components": [
+    {
+      "id": "persistor",
+      "path": "nvflare.app_opt.pt.file_model_persistor.PTFileModelPersistor",
+      "args": {
+        "model": {
+          "path": "model.gmic.GMIC",
+          "args": {
+            "parameters": {
+              "device_type": "gpu",
+              "gpu_number": "0",
+              "max_crop_noise": [
+                100,
+                100
+              ],
+              "max_crop_size_noise": 100,
+              "cam_size": [
+                46,
+                30
+              ],
+              "K": 6,
+              "crop_shape": [
+                256,
+                256
+              ],
+              "post_processing_dim": 256,
+              "num_classes": 2,
+              "use_v1_global": false,
+              "percent_t": 0.02
+            }
+          }
+        },
+        "source_ckpt_file_full_name": "/workspace/models/sample_model_5.p"
+      }
+    },
+    {
+      "id": "shareable_generator",
+      "path": "nvflare.app_common.shareablegenerators.full_model_shareable_generator.FullModelShareableGenerator",
+      "args": {}
+    },
+    {
+      "id": "aggregator",
+      "path": "nvflare.app_common.aggregators.intime_accumulate_model_aggregator.InTimeAccumulateWeightedAggregator",
+      "args": {
+        "expected_data_kind": "WEIGHTS"
+      }
+    },
+    {
+      "id": "model_selector",
+      "path": "nvflare.app_common.widgets.intime_model_selector.IntimeModelSelector",
+      "args": {
+        "validation_metric_name": "val_auc",
+        "key_metric": "val_auc",
+        "negate_key_metric": false
+      }
+    }
+  ]
+}

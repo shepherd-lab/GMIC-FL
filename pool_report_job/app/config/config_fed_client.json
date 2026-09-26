@@ -1,0 +1,20 @@
+{
+  "format_version": 2,
+  "executors": [
+    {
+      "tasks": ["pool_report"],
+      "executor": {
+        "id": "PoolReportExecutor",
+        "path": "pool_report_executor.PoolReportExecutor",
+        "args": {
+          "results_dir": "/workspace/data/processed/ditto_mw_g0.01_l0.5_f0_amp_3client_20260724",
+          "task_name": "pool_report",
+          "methods": ["incoming_global", "pretrained_baseline", "ditto_modulewise_perround"]
+        }
+      }
+    }
+  ],
+  "task_data_filters": [],
+  "task_result_filters": [],
+  "components": []
+}

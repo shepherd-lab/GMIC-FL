@@ -1,0 +1,119 @@
+{
+  "format_version": 2,
+  "executors": [
+    {
+      "tasks": [
+        "get_weights",
+        "train",
+        "validate",
+        "test",
+        "submit_model"
+      ],
+      "executor": {
+        "id": "GMICFederatedExecutor",
+        "path": "bc_executor.GMICFederatedExecutor",
+        "args": {
+          "epochs": 1,
+          "patience": 6,
+          "batch_size": 32,
+          "lr_heads": 3e-05,
+          "lr_backbone": 3e-07,
+          "weight_decay": 1e-06,
+          "optimizer_name": "adam",
+          "data_path_map": {
+            "HIPIMR": "/workspace/data/archived_data_csvs/gmic_df_HIPIMR_full_20260604_113112.csv",
+            "RSNA-AU": "/workspace/data/archived_data_csvs/gmic_df_site2.csv",
+            "RSNA-US": "/workspace/data/archived_data_csvs/gmic_df_site1.csv"
+          },
+          "image_path": "/workspace/data",
+          "input_format": "csv",
+          "enable_preprocessing": true,
+          "force_preprocessing": false,
+          "cache_validation": true,
+          "use_predefined_splits": true,
+          "val_split": 0.15,
+          "test_split": 0.15,
+          "random_seed": 42,
+          "output_dir": "/workspace/results/ditto/{site}",
+          "preprocess_cache_dir_map": {
+            "HIPIMR": "/workspace/data/processed/fedprox_3client",
+            "RSNA-AU": "/workspace/data/processed/ditto_sim_cache/RSNA-AU",
+            "RSNA-US": "/workspace/data/processed/ditto_sim_cache/RSNA-US"
+          },
+          "num_processes": 4,
+          "model_path": "/workspace/models/sample_model_5.p",
+          "pretrained_weights_path": "/workspace/models/sample_model_5.p",
+          "device": "cuda:0",
+          "percent_t_key": "1",
+          "lambda_l1": 1e-05,
+          "method": "ditto",
+          "ditto_lambda": 0.05,
+          "fedprox_mu": 0.1,
+          "lambda_global": 1.0,
+          "lambda_local": 0.1,
+          "lambda_fusion": null,
+          "use_fedbn": false,
+          "local_epochs": null,
+          "train_log_batch_interval": 1,
+          "log_lr_each_epoch": true,
+          "per_file_logging": true,
+          "tolerant_missing_metadata": false,
+          "debug_devices": false,
+          "use_amp": true,
+          "grad_accumulation": 1,
+          "memory_efficient": true,
+          "gpus": "0",
+          "gmic_parameters": {
+            "max_crop_noise": [
+              100,
+              100
+            ],
+            "max_crop_size_noise": 100,
+            "cam_size": [
+              46,
+              30
+            ],
+            "K": 6,
+            "crop_shape": [
+              256,
+              256
+            ],
+            "post_processing_dim": 256,
+            "num_classes": 2,
+            "use_v1_global": false
+          },
+          "loss": "gmic",
+          "pos_weight": 1.0,
+          "use_balanced_sampler": true,
+          "lr_scheduler": null,
+          "decision_threshold": 0.5,
+          "eval_threshold_sweep": [
+            0.3,
+            0.4,
+            0.5,
+            0.6,
+            0.7
+          ],
+          "freeze_backbone_epochs": 2,
+          "resume_from_local_round": -1,
+          "cache_global_trajectory": false,
+          "cache_incoming_global": true,
+          "eval_incoming_global": true,
+          "log_file": "/workspace/results/ditto/{site}/executor.log",
+          "file_integrity_check": true,
+          "fail_on_integrity_error": false,
+          "task_names": {
+            "pre_train": "get_weights",
+            "train": "train",
+            "validate": "validate",
+            "test": "test",
+            "submit_model": "submit_model"
+          }
+        }
+      }
+    }
+  ],
+  "task_data_filters": [],
+  "task_result_filters": [],
+  "components": []
+}

@@ -1,0 +1,39 @@
+Copyright (C) 2020 Yiqiu Shen, Nan Wu, Jason Phang, Jungkyu Park, Kangning Liu,
+Sudarshini Tyagi, Laura Heacock, S. Gene Kim, Linda Moy, Kyunghyun Cho, Krzysztof J. Geras
+
+This project is licensed under GNU Affero General Public License, Version 3.
+
+You may not use this project except in compliance with the License.
+
+The original GMIC model and code are available at https://github.com/nyukat/GMIC
+and described in Shen et al., "An interpretable classifier for high-resolution
+breast cancer screening images utilizing weakly supervised localization"
+(Medical Image Analysis, 2021; arXiv:2002.07613).
+
+--------------------------------------------------------------------------------
+Modifications
+--------------------------------------------------------------------------------
+
+Copyright (C) 2026 Shepherd Research Lab, University of Hawaiʻi Cancer Center
+
+Beginning in 2025, this repository was extended into a federated-learning
+training and evaluation system for breast cancer detection across multiple
+clinical sites, built on NVIDIA FLARE (NVFLARE). The additions include:
+
+  - Federated methods: FedAvg, FedProx, FedBN, and personalized Ditto
+    (scalar and module-wise), implemented as an NVFLARE executor.
+  - Crash-resume of interrupted federated runs.
+  - Optional per-site precision and micro-batch controls for training on
+    memory-constrained GPUs.
+  - Post-hoc per-subgroup (race/ethnicity) fairness analysis tooling.
+
+These modifications are described in:
+
+  Sollis LJ, Young PM, Bunnell A, Quon B, Hernandez BY, Wolfgruber TK,
+  Shepherd J. "Personalized Federated Learning for Equitable Breast Cancer
+  Detection in Underrepresented Pacific Islander Populations." Presented at
+  the MICCAI 2026 Workshop on Distributed, Collaborative, and Federated
+  Learning (DeCaF); to appear in Springer Lecture Notes in Computer Science.
+
+The modifications are likewise licensed under GNU Affero General Public
+License, Version 3. Modified files carry a notice to that effect.

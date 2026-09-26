@@ -1,0 +1,45 @@
+services:
+  gmic_fl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # ✅ GPU access (Docker Compose v2)
+    # gpus: all
+
+    environment:
+      - PYTHONUNBUFFERED=1
+      # Redirect NVFLARE's job log root (log.txt) to a MOUNTED path so it survives the
+      # server's run-dir deletion on job completion. NVFLARE os.makedirs() this automatically
+      # (no manual mkdir needed). Persists under the ${CURRENT_DIR}:/workspace mount.
+      - NVFL_LOG_ROOT=/workspace/server_logs
+
+    # ❌ Remove this to avoid name conflicts across servers
+    # container_name: gmic_fl_container
+
+    volumes:
+      - "${CURRENT_DIR}:/workspace"
+
+    ports:
+      # The server serves FL (gRPC) on 8002 -- per its own log: "created backbone external
+      # listener for grpc://0:8002" and "secure port at 0.0.0.0:8002". Remote clients connect
+      # to <SERVER_PUBLIC_IP>:8002, so this host port MUST be published or they get
+      # target_unreachable / "Connection ... is closed". This was missing (only 8102 was
+      # mapped, which nothing listens on), so distributed clients could never reach the server.
+      - "8002:8002"   # FL gRPC (clients <-> server) -- REQUIRED for remote clients
+      - "8102:8102"   # kept (no-op; nothing listens here) to avoid removing an existing mapping
+      - "8103:8103"   # admin / HCI console (server log: "Admin Server ... on Port 8103")
+      - "8443:8443"   # overseer / service-provider
+
+    shm_size: "32gb"
+    stdin_open: true
+    tty: true
+
+    # ✅ Run server in foreground so logs are real logs.
+    # Set ORG_NAME (in a .env file or the shell) to the server org from your provisioning
+    # project (gmic-localhost.yml); it must match the server participant's org.
+    command: >
+      bash -lc "python -u -m nvflare.private.fed.app.server.server_train
+      -m /workspace
+      -s fed_server.json
+      --set secure_train=true config_folder=config org=${ORG_NAME:-example_org}"

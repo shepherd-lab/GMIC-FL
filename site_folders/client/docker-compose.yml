@@ -1,0 +1,50 @@
+services:
+  gmic_fl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # GPUs (modern compose syntax)
+    # gpus: all
+
+    # --- GPU: Use CDI syntax (spec: devices section) ---
+    # Podman supports CDI natively; this replaces the docker-specific
+    # `gpus: all` syntax and works without the NVIDIA container runtime hook.
+    devices:
+      - "nvidia.com/gpu=${GPU_DEVICES:-all}"
+
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=${GPU_DEVICES}
+      - PYTHONUNBUFFERED=1
+
+    # Drop privileges & block escalation
+    # cap_drop:
+    #  - ALL
+
+    # --- Rootless volume permissions (spec: userns_mode) ---
+    # Without this, bind-mounted host directories may appear as owned by
+    # an overflow UID inside the container. keep-id maps your host UID→UID.
+    userns_mode: keep-id
+
+    container_name: gmic_fl_container
+    volumes:
+      - type: bind
+        source: ${CURRENT_DIR}
+        target: /workspace
+      - type: bind
+        source: ${DATA_DIR}
+        target: /workspace/data
+
+    ports:
+      - "8002:8002"   # FL API
+
+    shm_size: "32gb"
+    stdin_open: true
+    tty: true
+
+    # --- Restart policy (spec: restart) ---
+    # Podman supports systemd socket activation as an alternative, but
+    # this keeps parity with Docker behavior.
+    restart: unless-stopped
+
+    command: ["bash", "-lc", "exec bash"]

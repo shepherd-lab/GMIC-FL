@@ -1,0 +1,12 @@
+{
+  "name": "local",
+  "min_clients": 1,
+  "mandatory_clients": [
+    "node"
+  ],
+  "deploy_map": {
+    "app": [
+      "@ALL"
+    ]
+  }
+}

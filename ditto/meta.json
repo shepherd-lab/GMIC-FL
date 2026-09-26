@@ -1,0 +1,14 @@
+{
+  "name": "ditto",
+  "min_clients": 3,
+  "mandatory_clients": [
+    "HIPIMR",
+    "RSNA-US",
+    "RSNA-AU"
+  ],
+  "deploy_map": {
+    "app": [
+      "@ALL"
+    ]
+  }
+}

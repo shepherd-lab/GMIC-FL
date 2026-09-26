@@ -1,0 +1,17 @@
+patient_id,exam_id,laterality,view,file_path,exam_level_label,view_level_label,split_group,horizontal_flip,tumor_laterality
+10001,0,L,CC,/data/images/10001_L_CC.png,0,0,train,NO,
+10001,0,L,MLO,/data/images/10001_L_MLO.png,0,0,train,NO,
+10001,0,R,CC,/data/images/10001_R_CC.png,0,0,train,NO,
+10001,0,R,MLO,/data/images/10001_R_MLO.png,0,0,train,NO,
+10002,0,L,CC,/data/images/10002_L_CC.png,1,1,train,NO,L
+10002,0,L,MLO,/data/images/10002_L_MLO.png,1,1,train,NO,L
+10002,0,R,CC,/data/images/10002_R_CC.png,1,0,train,NO,L
+10002,0,R,MLO,/data/images/10002_R_MLO.png,1,0,train,NO,L
+10003,0,L,CC,/data/images/10003_L_CC.png,1,0,dev,NO,R
+10003,0,L,MLO,/data/images/10003_L_MLO.png,1,0,dev,NO,R
+10003,0,R,CC,/data/images/10003_R_CC.png,1,1,dev,NO,R
+10003,0,R,MLO,/data/images/10003_R_MLO.png,1,1,dev,NO,R
+10004,0,L,CC,/data/images/10004_L_CC.png,1,1,test,NO,
+10004,0,L,MLO,/data/images/10004_L_MLO.png,1,1,test,NO,
+10004,0,R,CC,/data/images/10004_R_CC.png,1,1,test,NO,
+10004,0,R,MLO,/data/images/10004_R_MLO.png,1,1,test,NO,

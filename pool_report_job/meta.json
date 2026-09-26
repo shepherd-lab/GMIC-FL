@@ -1,0 +1,8 @@
+{
+  "name": "gmic_pool_report",
+  "min_clients": 3,
+  "mandatory_clients": [],
+  "deploy_map": {
+    "app": ["@ALL"]
+  }
+}

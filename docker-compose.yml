@@ -1,0 +1,42 @@
+services:
+  gmic_fl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gmic_fl_container
+    network_mode: host
+    # Host paths come from a .env file (or your shell): set REPO_ROOT to your checkout of this
+    # repo and DATA_ROOT to the directory holding the datasets. Left side of each ':' is the host
+    # path; right side is the fixed path inside the container.
+    volumes:
+      - ${REPO_ROOT:-.}:/workspace
+      - ${DATA_ROOT}/rsna-dataset:/workspace/data/rsna-dataset
+      - ${DATA_ROOT}/p7_pngs:/workspace/data/p7_pngs
+      - ${DATA_ROOT}/gmic_format_xai.csv:/workspace/data/gmic_format_xai.csv
+      - ${DATA_ROOT}/p7_xai_covar_250228.csv:/workspace/data/p7_xai_covar_250228.csv
+      # Optional mounts for demo/testing - enable as needed
+      # - ../GMIC-mods/data:/workspace/data
+      # - ../GMIC-mods/demo/input_metadata.csv:/workspace/demo/input_metadata.csv
+    #ports:
+      # - "8887:8887"   # Jupyter Notebook (optional)
+      # - "8102:8102"   # FL API
+      # - "8103:8103"   # Admin API
+      # - "8443:8443"   # Overseer API
+      # - "6006:6006"   # TensorBoard
+      # - "8443:8443" # Alternative FL API
+      #- "5000:5000"   # Optional: FL API / Flask
+    shm_size: "128gb"
+    gpus: all                                   # <— key line
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    stdin_open: true              # Keep stdin open for interaction
+    tty: true                     # Allocate pseudo-TTY for shell
+    #dns:
+      #- 8.8.8.8
+      #- 1.1.1.1
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider https://security.ubuntu.com || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
