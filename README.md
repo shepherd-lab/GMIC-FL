@@ -207,6 +207,19 @@ If you use this code, please cite both the federated-learning paper (above) and
 the original GMIC work:
 
 ```bibtex
+@inproceedings{sollis2026personalized,
+  title     = {Personalized Federated Learning for Equitable Breast Cancer
+               Detection in Underrepresented Pacific Islander Populations},
+  author    = {Sollis, L. J. and Young, P. M. and Bunnell, A. and Quon, B. and
+               Hernandez, B. Y. and Wolfgruber, T. K. and Shepherd, J.},
+  booktitle = {MICCAI 2026 Workshop on Distributed, Collaborative, and
+               Federated Learning (DeCaF)},
+  series    = {Lecture Notes in Computer Science},
+  publisher = {Springer},
+  year      = {2026},
+  note      = {To appear}
+}
+
 @article{shen2021gmic,
   title   = {An interpretable classifier for high-resolution breast cancer
              screening images utilizing weakly supervised localization},
